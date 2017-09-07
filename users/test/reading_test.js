@@ -19,4 +19,11 @@ describe('reading users from db', () => {
             done();
         })
     });
+
+    it('find a user with a particular id', (done) => {
+        User.findOne({_id: murali._id}).then((user) => {
+            assert(user.name === 'murali');
+            done();
+        })
+    });
 });
