@@ -15,7 +15,7 @@ describe('reading users from db', () => {
     // done = tells mocha that this test takes sometime and call's done
     it('finds all of users with name murali', (done) => {
         User.find({name:'murali'}).then((users) => {
-            console.log(users);
+            assert(users[0]._id.toString() === murali._id.toString());
             done();
         })
     });
