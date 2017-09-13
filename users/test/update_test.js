@@ -8,6 +8,7 @@ describe('updating records', () => {
     beforeEach((done) => {
         murali = new User({
             name: 'murali',
+            postCount: 0
         });
         murali.save().then(() => done());
     });
@@ -27,27 +28,35 @@ describe('updating records', () => {
           murali.save(),
           done
         );
-        done();
     });
 
     it('a model instance can update', (done) => {
-        assertName(murali.update({name: 'prashanth'}), done);
-        done();
+        assertName(
+          murali.update({name: 'candy'}),
+          done
+        );
     });
 
     it('model class can update one record', (done) => {
         assertName(
-          User.findOneAndUpdate({name: 'murali'}, {name: 'prashanth'}),
+          User.findOneAndUpdate({name: 'murali'}, {name: 'candy'}),
           done
         );
-        done();
     });
 
     it('model class can find a record with an ID and update', (done) => {
         assertName(
-          User.findByIdAndUpdate(murali._id, {name: 'prashanth'}),
+          User.findByIdAndUpdate(murali._id, {name: 'candy'}),
           done
         );
-        done();
+    });
+
+    it('A user can have post count incremented by 1', () => {
+        User.update({name: 'murali'}, {$inc: {postCount: 10}})
+        .then(() => User.findOne({name: 'murali'}))
+        .then((user) => {
+             assert(user === 1);
+             done();
+         });
     });
 });
