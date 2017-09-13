@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const PostSchema = require('./post');
 const Schema = mongoose.Schema;
 
 const userShcema = new Schema({
@@ -11,6 +12,7 @@ const userShcema = new Schema({
        required: [true, 'requires a name']
    },
    postCount: Number,
+   posts: [PostSchema]
 });
 
 // mongoose creates collection `user` inside mongo if there's no collection already called `user`.
