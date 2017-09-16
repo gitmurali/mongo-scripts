@@ -12,9 +12,19 @@ const userShcema = new Schema({
        required: [true, 'requires a name']
    },
    postCount: Number,
-   posts: [PostSchema]
+   posts: [PostSchema],
+   blogPosts: [{
+       type: Schema.Types.ObjectId,
+       ref: 'blogPost'
+   }]
 });
 
+userShcema.pre('remove', function (next) {
+   const BlogPost = mongoose.model('blogPost');
+    BlogPost.remove({_id: {$in: this.blogPosts}})
+      .then(() => next());
+
+});
 // mongoose creates collection `user` inside mongo if there's no collection already called `user`.
 const User = mongoose.model('user', userShcema);
 

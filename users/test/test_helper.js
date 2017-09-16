@@ -12,7 +12,12 @@ before((done)=> { // this will be called once for entire test suite
 });
 
 beforeEach((done) => { // this will be called before each test case.
-    mongoose.connection.collections.users.drop(() => {
-          done();
+    const {users, comments, blogposts} = mongoose.connection.collections;
+    users.drop(() => {
+        comments.drop(() => {
+           blogposts.drop(() => {
+              done();
+           });
+        });
     });
 });
